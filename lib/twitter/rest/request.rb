@@ -4,17 +4,18 @@ require 'http/form_data'
 require 'json'
 require 'openssl'
 require 'twitter/error'
-require 'twitter/headers'
 require 'twitter/rate_limit'
 require 'twitter/utils'
+require 'twitter/rest/request_options'
 
 module Twitter
   module REST
     class Request
       include Twitter::Utils
+      include Twitter::REST::RequestOptions
       BASE_URL = 'https://api.twitter.com'.freeze
       attr_accessor :client, :headers, :options, :path, :rate_limit,
-                    :request_method, :uri
+                    :request_method, :uri, :options_key
       alias verb request_method
 
       # @param client [Twitter::Client]
@@ -25,7 +26,7 @@ module Twitter
       def initialize(client, request_method, path, options = {})
         @client = client
         @uri = Addressable::URI.parse(path.start_with?('http') ? path : BASE_URL + path)
-        set_multipart_options!(request_method, options)
+        create_request_options!(request_method, options)
         @path = uri.path
         @options = options
         @options_key = {get: :params, json_post: :json, delete: :params}[request_method] || :form
