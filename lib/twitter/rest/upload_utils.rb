@@ -3,7 +3,6 @@ require 'twitter/rest/request'
 module Twitter
   module REST
     module UploadUtils
-    private
 
       # Uploads images and videos. Videos require multiple requests and uploads in chunks of 5 Megabytes.
       # The only supported video format is mp4.
