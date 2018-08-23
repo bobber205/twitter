@@ -8,12 +8,12 @@ module Twitter
       # The only supported video format is mp4.
       #
       # @see https://dev.twitter.com/rest/public/uploading-media
-      def upload(media, media_category_prefix: 'tweet')
+      def upload(media, media_category_prefix: 'tweet', extension =  File.extname(media))
         puts "Upload called!"
         puts File.size(media)
-        puts "Extension is #{File.extname(media)}"
+        puts "Extension is #{extension}"
         return chunk_upload(media, 'video/mp4', "#{media_category_prefix}_video") if File.extname(media) == '.mp4'
-        return chunk_upload(media, 'dm/gif', "#{media_category_prefix}_gif") if File.extname(media) == '.gif' && File.size(media) > 5
+        return chunk_upload(media, 'dm/gif', "#{media_category_prefix}_gif") if extension && File.size(media) > 5
 
         Twitter::REST::Request.new(self, :multipart_post, 'https://upload.twitter.com/1.1/media/upload.json', key: :media, file: media).perform
       end
