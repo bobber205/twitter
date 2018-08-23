@@ -8,9 +8,10 @@ module Twitter
       # The only supported video format is mp4.
       #
       # @see https://dev.twitter.com/rest/public/uploading-media
-      def upload(media, media_category_prefix: 'tweet', extension =  File.extname(media))
+      def upload(media, media_category_prefix: 'tweet', extension = nil)
         puts "Upload called!"
         puts File.size(media)
+        extension ||= File.extname(media)
         puts "Extension is #{extension}"
         return chunk_upload(media, 'video/mp4', "#{media_category_prefix}_video") if File.extname(media) == '.mp4'
         return chunk_upload(media, 'dm/gif', "#{media_category_prefix}_gif") if extension  == '.gif' && File.size(media) > 5
