@@ -17,6 +17,7 @@ module Twitter
 
       # rubocop:disable MethodLength
       def chunk_upload(media, media_type, media_category)
+        puts "Chunk upload called --> #{media_type} === #{media_category}"
         init = Twitter::REST::Request.new(self, :post, 'https://upload.twitter.com/1.1/media/upload.json',
                                           command: 'INIT',
                                           media_type: media_type,
