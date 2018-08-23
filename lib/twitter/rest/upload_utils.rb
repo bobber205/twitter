@@ -9,6 +9,7 @@ module Twitter
       #
       # @see https://dev.twitter.com/rest/public/uploading-media
       def upload(media, media_category_prefix: 'tweet')
+        puts "Upload called!"
         return chunk_upload(media, 'video/mp4', "#{media_category_prefix}_video") if File.extname(media) == '.mp4'
         return chunk_upload(media, 'dm/gif', "#{media_category_prefix}_gif") if File.extname(media) == '.gif' && File.size(media) > 5
 
