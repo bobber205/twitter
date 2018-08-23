@@ -10,11 +10,16 @@ module Twitter
       # @see https://dev.twitter.com/rest/public/uploading-media
       def upload(media,  extension = nil, media_category_prefix: 'tweet')
         puts "Upload called!"
-        puts File.size(media)
         extension ||= File.extname(media)
         puts "Extension is #{extension}"
-        return chunk_upload(media, 'video/mp4', "#{media_category_prefix}_video") if File.extname(media) == '.mp4'
-        return chunk_upload(media, 'dm/gif', "#{media_category_prefix}_gif") if extension  == '.gif' && File.size(media) > 5
+        
+        if (extension == ".gif") 
+          media_category = "dm_gif"
+          media_type = "image/gif"
+        end
+        
+        return chunk_upload(media, media_type, media_category) if File.extname(media) == '.mp4'
+        return chunk_upload(media, media_type, media_category) if extension  == '.gif'
 
         Twitter::REST::Request.new(self, :multipart_post, 'https://upload.twitter.com/1.1/media/upload.json', key: :media, file: media).perform
       end
