@@ -8,7 +8,7 @@ module Twitter
       # The only supported video format is mp4.
       #
       # @see https://dev.twitter.com/rest/public/uploading-media
-      def upload(media, media_category_prefix: 'tweet', extension = nil)
+      def upload(media,  extension = nil, media_category_prefix: 'tweet')
         puts "Upload called!"
         puts File.size(media)
         extension ||= File.extname(media)
