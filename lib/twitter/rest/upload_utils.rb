@@ -16,6 +16,9 @@ module Twitter
         if (extension == ".gif") 
           media_category = "dm_gif"
           media_type = "image/gif"
+        elsif (extension == ".jpeg")
+          media_category = "dm_image"
+          media_type = "image/jpeg"
         end
         
         return chunk_upload(media, media_type, media_category) if File.extname(media) == '.mp4'
