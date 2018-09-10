@@ -22,7 +22,7 @@ module Twitter
         end
         
         return chunk_upload(media, media_type, media_category) if File.extname(media) == '.mp4'
-        return chunk_upload(media, media_type, media_category) if extension  == '.gif'
+        return chunk_upload(media, media_type, media_category) if extension  == '.gif' || extension == '.jpeg'
 
         Twitter::REST::Request.new(self, :multipart_post, 'https://upload.twitter.com/1.1/media/upload.json', key: :media, file: media).perform
       end
