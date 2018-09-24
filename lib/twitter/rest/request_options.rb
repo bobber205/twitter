@@ -15,6 +15,8 @@ module Twitter
           create_json_options_post!
         elsif request_method == :json_put
           create_json_options_put!
+        elsif request_method == :json_delete
+          create_json_options_delete!
         else
           create_standard_options!(request_method, options)
         end
@@ -49,6 +51,12 @@ module Twitter
       def create_json_options_put!
         @options_key = :json
         @request_method = :put
+        @headers = Twitter::Headers.new(@client, @request_method, @uri).request_headers
+      end
+
+      def create_json_options_delete!
+        @options_key = :json
+        @request_method = :delete
         @headers = Twitter::Headers.new(@client, @request_method, @uri).request_headers
       end
 
