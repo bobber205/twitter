@@ -12,8 +12,10 @@ module Twitter
         puts "Upload called!"
         extension ||= File.extname(media)
         puts "Extension is #{extension}"
-        
-        if (extension == ".gif") 
+        if (extension == "tweet_gif")
+          media_type = "image/gif"
+          media_category = "tweet_gif"
+        elsif (extension == ".gif") 
           media_category = "dm_gif"
           media_type = "image/gif"
         elsif (extension == ".jpeg")
@@ -22,7 +24,7 @@ module Twitter
         end
         
         return chunk_upload(media, media_type, media_category) if File.extname(media) == '.mp4'
-        return chunk_upload(media, media_type, media_category) if extension  == '.gif' || extension == '.jpeg'
+        return chunk_upload(media, media_type, media_category) if extension  == '.gif' || extension == '.jpeg' || extension == 'tweet_gif'
 
         Twitter::REST::Request.new(self, :multipart_post, 'https://upload.twitter.com/1.1/media/upload.json', key: :media, file: media).perform
       end
