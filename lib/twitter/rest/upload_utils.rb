@@ -35,7 +35,7 @@ module Twitter
         init = Twitter::REST::Request.new(self, :post, 'https://upload.twitter.com/1.1/media/upload.json',
                                           command: 'INIT',
                                           media_type: media_type,
-                                          shared: true,
+                                          shared: false,
                                           media_category: media_category,
                                           total_bytes: media.size).perform
         until media.eof?
