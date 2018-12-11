@@ -32,10 +32,12 @@ module Twitter
       # rubocop:disable MethodLength
       def chunk_upload(media, media_type, media_category)
         puts "Chunk upload called --> #{media_type} === #{media_category} SHARED IS SET TO TRUE!"
+        shared = true
+        shared = false if media_category == "tweet_gif"
         init = Twitter::REST::Request.new(self, :post, 'https://upload.twitter.com/1.1/media/upload.json',
                                           command: 'INIT',
                                           media_type: media_type,
-                                          shared: false,
+                                          shared: shared,
                                           media_category: media_category,
                                           total_bytes: media.size).perform
         until media.eof?
